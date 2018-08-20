@@ -7,8 +7,10 @@ mkdir ${ls_date}
 cd ${ls_date}
 gitbook init
 
+echo "{\"title\": \"kindle推送-${ls_date}\"}" >> book.json
+
 cd ../..
-scrapy crawl ckxx
+/usr/local/bin/scrapy crawl ckxx
 
 cd posts
 cd ${ls_date}

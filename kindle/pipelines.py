@@ -7,17 +7,13 @@
 
 import re
 import datetime
-# coding=utf-8
-
 import sys
-reload(sys) 
-sys.setdefaultencoding('utf-8') 
 
 class KindlePipeline(object):
     def process_item(self, item, spider):
         date = datetime.datetime.strftime(datetime.datetime.now(), "%Y%m%d")
-        
-        d = "posts/" + date + "/"
+
+        d = sys.path[0] + "/posts/" + date + "/"
 
         result = re.findall(r'(?<=\/)(\d+)(_\d+)?(?=.shtml)', item["url"])
         filename = result[0][0]

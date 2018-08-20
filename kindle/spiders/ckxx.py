@@ -13,9 +13,6 @@ class CkxxSpider(scrapy.Spider):
 
     def parse(self, response):
         date = datetime.datetime.strftime(datetime.datetime.now(), "%Y%m%d")
-        
-        print(date)
-        
         body = response.body[1:-1]
         body = json.loads(body)
         data = body["data"]
@@ -32,7 +29,7 @@ class CkxxSpider(scrapy.Spider):
         item['title'] = response.xpath("//h1[contains(@class, 'YH')]/text()").extract_first()
         item['content'] = response.xpath('//div[contains(@class, "article-content")]').extract_first()
         item['url'] = response.url
-        
+
         if '延伸阅读' in item['content'] :
             return
 

@@ -25,15 +25,15 @@ class CkxxSpider(scrapy.Spider):
 
     def parse_article(self, response):
         item = KindleItem()
-        item['resource'] = "参考消息国际版"
-        item['title'] = response.xpath("//h1[contains(@class, 'YH')]/text()").extract_first()
-        item['content'] = response.xpath('//div[contains(@class, "article-content")]').extract_first()
+        item['resource'] = "参考消息"
+        item['title'] = response.xpath("//h1[contains(@class, 'articleHead')]/text()").extract_first()
+        item['content'] = response.xpath('//div[contains(@class, "articleText")]').extract_first()
         item['url'] = response.url
 
-        if '延伸阅读' in item['content'] :
+        if item['content'] and '延伸阅读' in item['content'] :
             return
 
-        next_link = response.xpath("//p[contains(@class, 'fz-16')]/strong/a/@href").extract_first()
+        next_link = response.xpath("//a[contains(@id, 'next_page')]/@href").extract_first()
 
         if( next_link ):
             yield scrapy.Request(next_link, self.parse_article, dont_filter=False)
